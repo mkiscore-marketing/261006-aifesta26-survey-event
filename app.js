@@ -55,7 +55,7 @@
         { key: "adoptionIntent", label: "도입의사", type: "radio", required: true,
           options: ["도입의사 있음", "도입의사 없음", "도입 검토중 (구매부서 협의 전)", "미확정 (정보확인 목적)", "미확정 (사전조사 목적)"] },
         { key: "adoptionTimeline", label: "도입 시점", type: "radio", required: true,
-          options: ["1~2개월 이내 (긴급도입)", "3개월 이내", "12개월 이내", "1년 이내", "1년 이후", "미정", "계획없음"] },
+          options: ["1~2개월 이내 (긴급도입)", "3개월 이내", "6개월 이내", "12개월 이내", "1년 이후", "미정", "계획없음"] },
         { key: "consult", label: "엠키스코어 영업팀의 상담을 받아보시겠어요?", type: "radio", required: true,
           options: ["예", "아니오"] }
       ]
@@ -166,8 +166,7 @@
         topbar("", 0, 0) +
         '<div class="content"><div class="card">' +
           "<h1>AI Festa 26 엠키스코어 부스 설문</h1>" +
-          '<p class="lede">1분이면 끝나는 간단한 설문에 참여하시면 100% 기념품을 받으실 수 있습니다.</p>' +
-          '<button class="btn btn-primary" id="btn-start">설문 참여하고 기념품 받아가세요</button>' +
+          '<button class="btn btn-primary" id="btn-start">설문 참여하고 부스 내 이벤트에 참여하세요</button>' +
         "</div></div>" +
       "</div>"
     ));
