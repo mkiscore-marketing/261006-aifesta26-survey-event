@@ -401,7 +401,29 @@
       setFailedSubmissions(failed);
       state.screen = "thanks";
       state.saveFailed = true;
+      state.retryFailed = false;
+      state.lastFailedRecord = record;
       render();
+    });
+  }
+
+  function retryLastFailed() {
+    var record = state.lastFailedRecord;
+    if (!record) return;
+    var btn = document.getElementById("btn-retry-thanks");
+    var status = document.getElementById("retry-status");
+    if (btn) { btn.disabled = true; btn.textContent = "다시 전송 중..."; }
+    if (status) { status.textContent = ""; }
+    sendRecord(record, 0).then(function () {
+      var failed = getFailedSubmissions().filter(function (r) { return r.id !== record.id; });
+      setFailedSubmissions(failed);
+      state.saveFailed = false;
+      state.lastFailedRecord = null;
+      render();
+    }).catch(function () {
+      state.retryFailed = true;
+      if (btn) { btn.disabled = false; btn.textContent = "다시 시도"; }
+      if (status) { status.textContent = "다시 실패했습니다. 스태프에게 알려주세요."; }
     });
   }
 
@@ -439,7 +461,12 @@
   function renderThanks() {
     var checkSvg = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 13l4 4L19 7" stroke="var(--good)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     var note = state.saveFailed
-      ? '<p class="lede" style="margin-top:14px;">네트워크 상태로 자동 저장이 지연될 수 있습니다. 스태프에게 알려주시면 확인해 드립니다.</p>'
+      ? '<div class="staff-box" style="margin-top:14px;">' +
+          '<p class="label">저장이 지연되고 있어요</p>' +
+          "<p>아래 버튼을 한 번 눌러 다시 시도해 주세요. 성공할 때까지 이 화면을 닫지 말아 주세요.</p>" +
+          '<button class="btn btn-primary" id="btn-retry-thanks" style="margin-top:14px;">다시 시도</button>' +
+          '<p id="retry-status" class="lede" style="margin:10px 0 0;color:var(--bad);"></p>' +
+        "</div>"
       : "";
     app.appendChild(el(
       '<div class="shell">' +
@@ -452,7 +479,14 @@
         "</div></div>" +
       "</div>"
     ));
-    state.saveFailed = false;
+    if (state.saveFailed) {
+      var btn = document.getElementById("btn-retry-thanks");
+      if (btn) btn.addEventListener("click", retryLastFailed);
+      if (state.retryFailed) {
+        var status = document.getElementById("retry-status");
+        if (status) status.textContent = "다시 실패했습니다. 스태프에게 알려주세요.";
+      }
+    }
   }
 
   function renderAdmin() {
