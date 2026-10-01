@@ -63,11 +63,11 @@
     {
       title: "AI 솔루션 도입",
       fields: [
-        { key: "aiAdoptionStage", label: "AI 솔루션을 도입하는 단계입니까?", type: "radio", required: true,
-          options: ["전사적으로 활용 중", "일부 부서에서 활용 중", "검토 중", "활용하지 않음"] },
-        { key: "aiAdoptionConcerns", label: "AI 솔루션 도입하는 데에 가장 큰 고민은 무엇입니까? (복수 응답 가능)", type: "checkbox", required: true,
-          options: ["비용", "보안", "개인정보 보호", "정확도", "구축 경험 부족", "운영 인력 부족", "경영진 설득", "기타"],
-          otherOption: "기타", otherKey: "aiAdoptionConcernsOther" },
+        { key: "aiConcernAreas", label: "현재 AI 도입 또는 고도화와 관련하여 검토 중이거나 해결이 필요한 영역은 무엇인가요? (복수 선택)", type: "checkbox", required: true,
+          options: ["LLM 배포 및 추론 속도·성능 개선", "GPU 비용 및 인프라 운영 효율화", "사내 문서 검색 및 RAG 정확도 개선", "AI Agent 구축 및 업무 자동화", "문서 Parsing 및 비정형 데이터 처리", "다양한 AI 모델 선택·연동 및 라우팅", "보안 및 On-premise 환경 구축", "기타"],
+          otherOption: "기타", otherKey: "aiConcernAreasOther" },
+        { key: "aiAdoptionTimeline", label: "현재 검토 중인 AI 과제의 도입 또는 PoC 계획 시점은 언제인가요?", type: "radio", required: true,
+          options: ["3개월 이내", "6개월 이내", "1년 이내", "1년 이후", "현재 정보 수집 및 검토 단계", "구체적인 계획 없음"] },
         { key: "sionicConsult", label: "추후 AI 솔루션 전문 기업, Sionic AI로부터 상담을 받아보시겠어요?", type: "radio", required: true,
           options: ["예", "아니오"] }
       ]
@@ -377,9 +377,9 @@
       adoptionIntent: s.adoptionIntent || "",
       adoptionTimeline: s.adoptionTimeline || "",
       consult: s.consult || "",
-      aiAdoptionStage: s.aiAdoptionStage || "",
-      aiAdoptionConcerns: s.aiAdoptionConcerns || [],
-      aiAdoptionConcernsOther: s.aiAdoptionConcernsOther || "",
+      aiConcernAreas: s.aiConcernAreas || [],
+      aiConcernAreasOther: s.aiConcernAreasOther || "",
+      aiAdoptionTimeline: s.aiAdoptionTimeline || "",
       sionicConsult: s.sionicConsult || "",
       consentRequired: s.consentRequired ? "예" : "아니오",
       consentMarketing: s.consentMarketing ? "예" : "아니오"
