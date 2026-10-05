@@ -26,7 +26,7 @@
         { key: "title", label: "직책", type: "text", required: true },
         { key: "phone", label: "휴대전화번호", type: "tel", required: true, ph: "01012345678 형식으로 숫자만 입력해 주세요." },
         { key: "companySize", label: "회사 규모", type: "radio", required: true,
-          options: ["대기업", "중견/중소기업", "스타트업", "교육(학교)"] }
+          options: ["공공 기관", "대기업", "중견/중소기업", "스타트업", "교육(학교)"] }
       ]
     },
     {
