@@ -45,8 +45,8 @@
       fields: [
         { key: "itBudget", label: "연간 IT 구매 예산 규모", type: "radio", required: true,
           options: ["100억 원 이상", "50억 원 이상", "30억 원 이상", "20억 원 이상", "10억 원 이상", "5억 원 이상", "3억 원 미만", "1억 원 미만", "모름 또는 없음"] },
-        { key: "decisionAuthority", label: "의사결정 권한", type: "radio", required: true,
-          options: ["CFO, CEO, COO, CTO", "예산 집행 담당", "타부서 리더(팀장급)", "구매부서 팀원", "해당 없음"] }
+        { key: "decisionAuthority", label: "구매 의사결정 시 권한", type: "radio", required: true,
+          options: ["C-Level 또는 임원급", "구매 담당 부서", "실사용 부서", "예산 기획 담당 부서", "해당 없음"] }
       ]
     },
     {
@@ -58,6 +58,20 @@
           options: ["1~2개월 이내 (긴급도입)", "3개월 이내", "6개월 이내", "12개월 이내", "1년 이후", "미정", "계획없음"] },
         { key: "consult", label: "엠키스코어 영업팀의 상담을 받아보시겠어요?", type: "radio", required: true,
           options: ["예", "아니오"] }
+      ]
+    },
+    {
+      title: "시장 조사",
+      intro: "현재까지 도입했거나 향후 도입 검토 예정인 브랜드를 선택해 주세요. (복수 응답 가능)",
+      fields: [
+        { key: "serverBrands", label: "서버 브랜드", type: "checkbox", required: true,
+          options: ["HPE", "Dell", "Lenovo", "Supermicro", "Gigabyte", "ASUS", "Pegatron", "KAYTUS", "QCT", "Wiwynn", "Inspur", "ASRock Rack", "기타 (직접 입력)", "잘 모르겠음"],
+          otherOption: "기타 (직접 입력)", otherKey: "serverBrandsOther",
+          exclusiveOption: "잘 모르겠음" },
+        { key: "storageBrands", label: "스토리지 브랜드", type: "checkbox", required: true,
+          options: ["WEKA", "HPE", "VAST Data", "DDN", "Pure Storage", "NetApp", "Dell", "Qumulo", "IBM", "Nutanix", "Hammerspace", "기타 (직접 입력)", "잘 모르겠음"],
+          otherOption: "기타 (직접 입력)", otherKey: "storageBrandsOther",
+          exclusiveOption: "잘 모르겠음" }
       ]
     },
     {
@@ -83,7 +97,7 @@
     }
   ];
 
-  var LS_DRAFT = "mki_aifesta26_survey_draft_v1";
+  var LS_DRAFT = "mki_aifesta26_survey_draft_v2";
   var LS_FAILED = "mki_aifesta26_failed_submissions_v1";
   var MAX_RETRIES = 3;
   var CONFIG = window.MKI_CONFIG || {};
@@ -249,6 +263,7 @@
         topbar("설문", stepIdx + 1, SURVEY_STEPS.length) +
         '<div class="content"><div class="card">' +
           "<h2>" + escapeHtml(step.title) + "</h2>" +
+          (step.intro ? '<p class="lede">' + escapeHtml(step.intro) + "</p>" : "") +
           '<div id="fields">' + fieldsHtml + "</div>" +
           '<div class="btn-row">' +
             (stepIdx > 0 ? '<button class="btn btn-ghost" id="btn-back">이전</button>' : "") +
@@ -377,6 +392,10 @@
       adoptionIntent: s.adoptionIntent || "",
       adoptionTimeline: s.adoptionTimeline || "",
       consult: s.consult || "",
+      serverBrands: s.serverBrands || [],
+      serverBrandsOther: s.serverBrandsOther || "",
+      storageBrands: s.storageBrands || [],
+      storageBrandsOther: s.storageBrandsOther || "",
       aiConcernAreas: s.aiConcernAreas || [],
       aiConcernAreasOther: s.aiConcernAreasOther || "",
       aiAdoptionTimeline: s.aiAdoptionTimeline || "",
